@@ -1,0 +1,54 @@
+                                            Transport Layer, Network Layer.
+*Chức năng tầng Transport
+Transport làm nhiệm vụ vận chuyển thông tin từ nguồn tới đích. Tầng Transport nhận dữ liệu nhận từ tầng Application rồi đóng gói bằng giao thức TCP hoặc UDP để vận chuyển đi. 
+Cho phép truyền đồng thời nhiều bản tin của các dịch vụ khác nhau trên cùng một đường truyền.
+TCP và UDP là hai giao thức nền tảng của tầng giao vận.
+Để phân biệt các lưu lượng của cácứng dụng khác nhau người ta sử dụng cổng (port).
+Dữ liệu ở tầng này được gọi là segments, nếu được truyền bằng giao thức TCP và được gọi là datagram nếu được truyền bằng giao thức UDP.
+Tầng giao vận cung cấp dịch vụ kết nối các ứng dụng với nhau thông qua việc sử dụng các cổng TCP và UDP. Do IP chỉ cung cấp dịch vụ phát chuyển nỗ lực tối đa (best effort delivery), tầng giao vận là tầng đâu tiên giải quyết vấn đề độ tin cậy.
+
+Giao thức TCP 
+-Là giao thức giao vận tin cậy
+-Là giao thức hướng kết nối
+Truyền theo kiểu pipeline 
+Không cho phép mất gói tin
+Kiểm soát tắc nghẽn
+Kiểm soát luồng
+Giao thức UDP 
+Giao thức hướng không kết nối (connectionless)
+Truyền tin “best-effort”: chỉ gửi 1 lần, không phát lại
+Cho phép mất dữ liệu
+Không đảm bảo việc truyền dữ liệu
+Tốc độ truyền cao
+
+Quá trình three-ways handshake (Bắt tay 3 bước)
+TCP thiết lập kết nối bằng 3 bước bắt tay (3-way handshake)
+  A                     B
+ sender ___________ receiver
+
+SYN seq=X ----------> SYN received (step 1)
+
+SYN received <--------send ACK X+1 and SYN Y (step 2)
+
+Send ACK Y+1 --------> (step 3)
+Một gói dữ liệu TCP chứa các code bits (6) dùng để xác định các loại segment. Có 6 loại segment: URG, ACK, PSH, RST, SYN, FIN
+* SYN (synchronization) dùng để bắt đầu một connection.
+* ACK (acknowledgement).
+* FIN (finish) dùng để ngắt một connection.
+* URG và PSH là gói tin ưu tiên
+* RST là gói tin cắt ngang
+ây giờ là các bước thực hiện việc thiết lập kết nối (giả sử A là người gởi và B là người nhận)
+- Bước 1. A gởi cho B một SYN segment, trong đó chứa Sequence number của A
+- Bước 2. Khi B nhận được B sẽ gởi lại một SYN – ACK Segment, trong đó chứa Sequence number của B và vùng ACK= Sequence number của B + 1
+- Bước 3. Khi A nhận được sẽ gởi lại một ACK Segment chứa Sequence number A bằng giá trị vùng ACK của B gởi tới và vùng ACK của A có giá trị bằng Sequence number +1
+Sau bước 3, kết nối được thiết lập và sẵn sàng truyền Data. Mục đích là để trao đổi Sequence Number và ACK Number.
+-->Mục đích của Phương pháp bắt tay 3 bước là để thiết lập kết nối giữa bên gởi và bên nhận để tránh bị mất dữ liệu
+              Port        giao thức
+HTTP          80            TCP
+HTTPS         443           TCP
+DNS           53          UDP/TCP    
+SSH           22            UDP     
+Telnet        23            TCP 
+FTP           20-21         TCP  
+SMTP          25            TCP
+
